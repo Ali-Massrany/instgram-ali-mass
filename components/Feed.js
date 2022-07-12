@@ -5,16 +5,22 @@ import Posts from "./Posts";
 import Stories from "./Stories";
 import Suggestions from "./Suggestions";
 
-export default function Feed() {
-  const [currentUser] = useRecoilState(userState)
+export default function Feed({ posts, storyUsers, suggestions }) {
+  const [currentUser] = useRecoilState(userState);
   return (
-    <main className={`grid ${currentUser ? "grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto": "grid-cols-1 md:grid-cols-2 md:max-w-3xl mx-auto"}  `}>
+    <main
+      className={`grid ${
+        currentUser
+          ? "grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto"
+          : "grid-cols-1 md:grid-cols-2 md:max-w-3xl mx-auto"
+      }  `}
+    >
       <section className="md:col-span-2">
         {/* Stories */}
-        <Stories />
+        <Stories storyUsers={storyUsers} />
 
         {/* Posts */}
-        <Posts />
+        <Posts posts={posts} />
       </section>
 
       <section className="hidden md:inline-grid md:col-span-1">
@@ -24,7 +30,7 @@ export default function Feed() {
           <MiniProfile />
           {/* Suggestions */}
 
-          <Suggestions />
+          <Suggestions suggestions={suggestions} />
         </div>
       </section>
     </main>

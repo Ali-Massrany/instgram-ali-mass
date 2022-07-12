@@ -2,8 +2,20 @@ import Head from "next/head";
 import Feed from "../components/Feed";
 import Header from "../components/Header";
 import UploadModal from "../components/UploadModal";
+import minifaker from "minifaker";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { getAuth } from "firebase/auth";
 
-export default function Home() {
+export default function Home({ posts, storyUsers, suggestions }) {
+  const postsParse = JSON.parse(posts);
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Head>
@@ -18,11 +30,44 @@ export default function Home() {
 
       {/* Feed */}
 
-      <Feed />
+      <Feed
+        posts={postsParse}
+        storyUsers={storyUsers}
+        suggestions={suggestions}
+      />
 
       {/* Modal */}
 
       <UploadModal />
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const storyUsers = minifaker.array(20, (i) => ({
+    username: minifaker.username({ locale: "en" }).toLowerCase(),
+    img: `https://i.pravatar.cc/150?img=${Math.ceil(Math.random() * 70)}`,
+    id: i,
+  }));
+
+  const suggestions = minifaker.array(5, (i) => ({
+    username: minifaker.username({ locale: "en" }).toLowerCase(),
+    jobTitle: minifaker.jobTitle(),
+    id: i,
+  }));
+
+  let posts = [];
+
+  const querySnapshot = await getDocs(collection(db, "posts"));
+
+  querySnapshot.forEach((doc) => {
+    posts.push({ ...doc.data(), id: doc.id });
+  });
+  return {
+    props: {
+      posts: JSON.stringify(posts),
+      storyUsers,
+      suggestions,
+    },
+  };
 }

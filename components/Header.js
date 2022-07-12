@@ -19,7 +19,6 @@ export default function Header() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const fetchUser = async () => {
-          console.log(user);
           const docRef = doc(
             db,
             "users",
@@ -68,7 +67,7 @@ export default function Header() {
           <input
             type="text"
             placeholder="Search"
-            className="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md"
+            className="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md "
           />
         </div>
 
@@ -81,10 +80,15 @@ export default function Header() {
           />
           {currentUser ? (
             <>
-              <PlusCircleIcon
-                onClick={() => setOpen(true)}
-                className="h-6 cursor-pointer hover:scale-125 transition-tranform duration-200 ease-out"
-              />
+              <div className="relative">
+                <PlusCircleIcon
+                  onClick={() => setOpen(true)}
+                  className="h-9 cursor-pointer hover:scale-125 transition-tranform duration-200 ease-out"
+                />
+                <p className="flex absolute flex-1 cursor-pointer whitespace-nowrap -left-6 text-sm ">
+                  UpLoad photo
+                </p>
+              </div>
               <img
                 onClick={onSignOut}
                 src={currentUser?.userImg}
