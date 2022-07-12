@@ -40,7 +40,7 @@ export default function Header() {
   }
   return (
     <div className="shadow-sm border-b sticky top-0 bg-white z-30">
-      <div className="flex items-center justify-between max-w-6xl mx-4 xl:mx-auto">
+      <div className="flex items-center justify-between max-w-6xl mx-2 xl:mx-auto">
         {/* Left */}
         <div className="cursor-pointer h-24 w-24 relative hidden lg:inline-grid">
           <Image
@@ -50,7 +50,7 @@ export default function Header() {
             onClick={() => router.push("/")}
           />
         </div>
-        <div className="cursor-pointer h-24 w-10 relative  lg:hidden">
+        <div className="cursor-pointer h-24 w-10 relative  lg:hidden mr-2">
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/800px-Instagram_logo_2016.svg.png"
             layout="fill"
@@ -85,7 +85,7 @@ export default function Header() {
                   onClick={() => setOpen(true)}
                   className="h-9 cursor-pointer hover:scale-125 transition-tranform duration-200 ease-out"
                 />
-                <p className="flex absolute flex-1 cursor-pointer whitespace-nowrap -left-6 text-sm ">
+                <p className="flex absolute flex-1 cursor-pointer whitespace-nowrap -left-4 text-[12px]">
                   UpLoad photo
                 </p>
               </div>
